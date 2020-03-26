@@ -1,0 +1,13 @@
+{
+    "twitter": {
+        "consumer_key": "QrCMyI8OOzcLaWeouRpfBFrfL",
+        "consumer_secret": "DCeWKHd7qLApoVMq6af8CHH3crJK5k3jPzLb5rre7mYo8RjWLd",
+        "access_token": "1038841810456666112-nfB9Gow63wqQWp6owIoXhvTOYyt6E1",
+        "access_secret" : "QoEMbBfLRcvZPyWXjfvAlggTDB80vqtE5NfQC9n8v6b1H"
+    },
+    "kafka": {
+        "broker": "localhost:9092",
+        "input_topic": "tweet",
+        "output_topic": "tweet-sentiment"
+    }
+}
