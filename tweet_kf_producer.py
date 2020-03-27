@@ -5,6 +5,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 
+
 class TweetProducer(tweepy.StreamListener):
     def __init__(self, broker, topic):
         self.client = pykafka.KafkaClient(broker)
@@ -36,22 +37,3 @@ class TweetProducer(tweepy.StreamListener):
     def on_error(self, status):
         logging.info("An error happended with status {}.".format(status))
         return True
-
-
-def main():
-    config = json.load(open('config.json'))
-    twitter_config = config["twitter"]
-    kafka_config = config["kafka"]
-    
-    # Create Auth object
-    auth = tweepy.OAuthHandler(twitter_config["consumer_key"], twitter_config["consumer_secret"])
-    auth.set_access_token(twitter_config["access_token"], twitter_config["access_secret"])
-    api = tweepy.API(auth)
-
-    # Create stream and bind the TweetProducer to it
-    stream = tweepy.Stream(auth, listener = TweetProducer(kafka_config["broker"], kafka_config["input_topic"]))
-    stream.filter(track=["Bloomberg"], languages = ['en'])
-
-
-if __name__ == "__main__":
-    main()
