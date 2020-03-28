@@ -1,6 +1,7 @@
 import json
 from tweet_handler import TweetHandler
 import pandas as pd
+import time
 
 def main():
     config = json.load(open('config.json'))
@@ -16,11 +17,11 @@ def main():
 
     universities = json.load(open('universities.json'))
 
-    dataframe = pd.DataFrame(columns=['city', 'tweet'])
+    dataframe = pd.DataFrame(columns=['university', 'tweet'])
 
-    for university, hashtag in list(universities.items())[:2]:
+    for university, hashtag in list(universities.items()):
         # Get history tweets
-        history_tweets = tweet_handler.get_history_tweets_by_dates(hashtag, "2020-03-01", "2020-03-25")
+        history_tweets = tweet_handler.get_history_tweets_by_dates(hashtag, "2020-01-01", "2020-03-25")
         print(len(history_tweets))
 
         new_df = pd.concat([
@@ -38,8 +39,8 @@ def main():
         dataframe.to_csv('tweets.csv', index=False)
 
         # This line is important - else error 429
-        # print("Completed {}, sleeping for 15 minutes.".format(university))
-        # time.sleep(15 * 60)
+        print("Completed {}, sleeping for 15 minutes.".format(university))
+        time.sleep(15 * 60)
 
 if __name__ == "__main__":
     main()
